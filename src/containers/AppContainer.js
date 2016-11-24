@@ -1,5 +1,9 @@
 import React from 'react';
 
-const AppContainer = () => <h1>Flight Track</h1>;
+import AppBar from 'material-ui/AppBar';
+
+const AppContainer = () => (
+  <AppBar title="Flight Track" />
+);
 
 export default AppContainer;
