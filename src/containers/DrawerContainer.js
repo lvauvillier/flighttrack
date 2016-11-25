@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 
 import Drawer from 'material-ui/Drawer';
 import FontIcon from 'material-ui/FontIcon';
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
+import { List, ListItem } from 'material-ui/List';
 import { spacing, typography } from 'material-ui/styles';
 
 import { toggleDrawer } from '../actions/uiActions';
@@ -44,6 +47,44 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
       />
       Flight Track
     </div>
+    <List>
+      <ListItem
+        primaryText="Dashboard"
+        leftIcon={
+          <FontIcon
+            className="fa fa-th-large"
+          />
+        }
+      />
+    </List>
+    <Divider />
+    <List>
+      <Subheader>Details</Subheader>
+      <ListItem
+        primaryText="Position"
+        leftIcon={
+          <FontIcon
+            className="fa fa-map-marker"
+          />
+        }
+      />
+      <ListItem
+        primaryText="Telemetry"
+        leftIcon={
+          <FontIcon
+            className="fa fa-tachometer"
+          />
+        }
+      />
+      <ListItem
+        primaryText="Battery"
+        leftIcon={
+          <FontIcon
+            className="fa fa-battery-full"
+          />
+        }
+      />
+    </List>
   </Drawer>
 );
 
