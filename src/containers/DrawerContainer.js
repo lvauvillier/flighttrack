@@ -5,9 +5,10 @@ import Drawer from 'material-ui/Drawer';
 import FontIcon from 'material-ui/FontIcon';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
-import { List, ListItem } from 'material-ui/List';
+import { List } from 'material-ui/List';
 import { spacing, typography } from 'material-ui/styles';
 
+import LinkListItem from '../components/LinkListItem';
 import { toggleDrawer } from '../actions/uiActions';
 import theme from '../theme';
 
@@ -30,6 +31,13 @@ const styles = {
     color: typography.textFullWhite,
     marginRight: 15,
   },
+  item: {
+    color: '#919398',
+  },
+  activeItem: {
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
 };
 
 const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
@@ -48,8 +56,12 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
       Flight Track
     </div>
     <List>
-      <ListItem
+      <LinkListItem
+        to="/"
+        activeOnlyWhenExact
         primaryText="Dashboard"
+        style={styles.item}
+        activeStyle={styles.activeItem}
         leftIcon={
           <FontIcon
             className="fa fa-th-large"
@@ -60,24 +72,33 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
     <Divider />
     <List>
       <Subheader>Details</Subheader>
-      <ListItem
+      <LinkListItem
+        to="/position"
         primaryText="Position"
+        style={styles.item}
+        activeStyle={styles.activeItem}
         leftIcon={
           <FontIcon
             className="fa fa-map-marker"
           />
         }
       />
-      <ListItem
+      <LinkListItem
+        to="/telemetry"
         primaryText="Telemetry"
+        style={styles.item}
+        activeStyle={styles.activeItem}
         leftIcon={
           <FontIcon
             className="fa fa-tachometer"
           />
         }
       />
-      <ListItem
+      <LinkListItem
+        to="/battery"
         primaryText="Battery"
+        style={styles.item}
+        activeStyle={styles.activeItem}
         leftIcon={
           <FontIcon
             className="fa fa-battery-full"
