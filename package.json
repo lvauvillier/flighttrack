@@ -11,13 +11,15 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
+    "aphrodite": "^1.1.0",
     "material-ui": "^0.16.4",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
     "react-router": "^4.0.0-alpha.5",
     "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-responsive": "^3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
