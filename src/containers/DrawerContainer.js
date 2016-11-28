@@ -13,9 +13,6 @@ import { toggleDrawer } from '../actions/uiActions';
 import theme from '../theme';
 
 const styles = {
-  drawer: {
-    borderRight: '1px solid #eee',
-  },
   logo: {
     display: 'block',
     textDecoration: 'none',
@@ -46,7 +43,6 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
     onRequestChange={() => dispatch(toggleDrawer())}
     docked={!smallScreen}
     zDepth={0}
-    containerStyle={styles.drawer}
   >
     <div style={styles.logo}>
       <FontIcon
