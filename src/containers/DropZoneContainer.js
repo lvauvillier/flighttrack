@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 
-import theme from '../theme';
+import { addFlightLogData } from '../actions/dataActions';
+import parser from '../utils/parser';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,16 +36,25 @@ const styles = StyleSheet.create({
 });
 
 class DropZoneContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOnDrop = this.handleOnDrop.bind(this);
+  }
 
-  static onDrop() {
-    // @todo
+  handleOnDrop(files) {
+    const { dispatch } = this.props;
+    parser(files[0], (data) => {
+      dispatch(addFlightLogData(data));
+    });
   }
 
   render() {
     return (
       <Dropzone
         className={css(styles.container)}
-        onDrop={this.onDrop}
+        onDrop={this.handleOnDrop}
+        multiple={false}
+        accept=".txt"
         activeStyle={{ backgroundColor: '#fafafa' }}
       >
         <div className={css(styles.content)}>
@@ -55,11 +66,15 @@ class DropZoneContainer extends Component {
             color="#cccccc"
           />
           <span className={css(styles.text)}>Drag & Drop a flight log</span>
-          <RaisedButton primary label="or select a file" onClick={this.onOpenClick} />
+          <RaisedButton primary label="or select a file" />
         </div>
       </Dropzone>
     );
   }
 }
 
-export default DropZoneContainer;
+DropZoneContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect()(DropZoneContainer);
