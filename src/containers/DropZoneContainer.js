@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
-import FontIcon from 'material-ui/FontIcon';
+import UploadIcon from 'material-ui/svg-icons/file/file-upload';
 
 import { addFlightLogData } from '../actions/dataActions';
 import parser from '../utils/parser';
@@ -30,7 +29,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   icon: {
-    fontSize: '6em',
+    width: 100,
+    height: 100,
     display: 'block',
   },
 });
@@ -58,12 +58,9 @@ class DropZoneContainer extends Component {
         activeStyle={{ backgroundColor: '#fafafa' }}
       >
         <div className={css(styles.content)}>
-          <FontIcon
-            className={classNames(
-              css(styles.icon),
-              'fa fa-download',
-            )}
+          <UploadIcon
             color="#cccccc"
+            style={{ width: 100, height: 100 }}
           />
           <span className={css(styles.text)}>Drag & Drop a flight log</span>
           <RaisedButton primary label="or select a file" />

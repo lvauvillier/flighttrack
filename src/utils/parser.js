@@ -32,6 +32,7 @@ export default (flightLog, callback) => {
     parser.parse(reader.result);
 
     callback({
+      title: flightLog.name,
       frames,
     });
   };
