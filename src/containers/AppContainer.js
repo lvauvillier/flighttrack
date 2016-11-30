@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   },
   content: {
     position: 'fixed',
+    overflowY: 'scroll',
     top: spacing.desktopKeylineIncrement,
     bottom: 0,
     right: 0,
@@ -35,21 +36,21 @@ const styles = StyleSheet.create({
     '@media (max-width: 768px)': {
       paddingLeft: 0,
     },
+    backgroundColor: '#f7f7f7',
   },
 });
 
-const AppContainer = ({ data, smallScreen, dispatch }) => (
+const AppContainer = ({ logFile, smallScreen, dispatch }) => (
   <div>
     <AppBar
       showMenuIconButton={smallScreen}
       className={css(styles.appBar)}
-      zDepth={0}
       onLeftIconButtonTouchTap={() => dispatch(toggleDrawer())}
-      title={data && data.title}
+      title={logFile}
     />
     <div className={css(styles.content)}>
       {
-        data ? (
+        logFile ? (
           <div>
             <Match pattern="/" exactly component={DashboardContainer} />
             <Match pattern="/position" component={PositionContainer} />
@@ -66,13 +67,13 @@ const AppContainer = ({ data, smallScreen, dispatch }) => (
 );
 
 AppContainer.propTypes = {
-  data: PropTypes.object,
+  logFile: PropTypes.string,
   smallScreen: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  data: state.data.frames ? state.data : null,
+  logFile: state.data.title ? state.data.title : null,
   smallScreen: state.browser.lessThan.medium,
 });
 

@@ -42,7 +42,6 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
     open={!smallScreen || drawerOpened}
     onRequestChange={() => dispatch(toggleDrawer())}
     docked={!smallScreen}
-    zDepth={0}
   >
     <div style={styles.logo}>
       <FontIcon
