@@ -51,7 +51,7 @@ const AppContainer = ({ logFile, smallScreen, dispatch }) => (
     <div className={css(styles.content)}>
       {
         logFile ? (
-          <div>
+          <div style={{ height: '100%' }}>
             <Match pattern="/" exactly component={DashboardContainer} />
             <Match pattern="/position" component={PositionContainer} />
             <Match pattern="/telemetry" component={TelemetryContainer} />
