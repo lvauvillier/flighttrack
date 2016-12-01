@@ -7,14 +7,26 @@ export default (flightLog, callback) => {
     const parser = new DJIParser();
 
     // init frames
-    const frames = [];
+    const frames = {};
     let details;
-    let flyTime = 0;
+    let currentFlyTime = 0;
+
+    const setCurrentFlyTime = (flyTime) => {
+      frames.start = frames.start ? frames.start : flyTime;
+      frames.end = flyTime;
+      // Detect droped frames and fill it with a copy of the current frame
+      if (currentFlyTime > 0) {
+        for (let i = currentFlyTime + 1; i < flyTime; i += 1) {
+          frames[i] = frames[currentFlyTime];
+        }
+      }
+      currentFlyTime = flyTime;
+    };
 
     // add property
     const addToCurrentFrame = (key, value) => {
-      frames[flyTime] = frames[flyTime] ? frames[flyTime] : {};
-      frames[flyTime][key] = value;
+      frames[currentFlyTime] = frames[currentFlyTime] ? frames[currentFlyTime] : {};
+      frames[currentFlyTime][key] = value;
     };
 
     parser.on('DETAILS', (obj) => {
@@ -23,6 +35,8 @@ export default (flightLog, callback) => {
         street: obj.getStreet(),
         city: obj.getCity(),
         area: obj.getArea(),
+        longitude: obj.getLongitude(),
+        latitude: obj.getLatitude(),
         totalDistance: obj.getTotalDistance(),
         totalTime: obj.getTotalTime(),
         maxHeight: obj.getMaxHeight(),
@@ -36,7 +50,7 @@ export default (flightLog, callback) => {
     });
 
     parser.on('OSD', (obj) => {
-      flyTime = obj.getFlyTime() * 10;
+      setCurrentFlyTime(obj.getFlyTime() * 10);
       addToCurrentFrame('longitude', obj.getLongitude());
       addToCurrentFrame('latitude', obj.getLatitude());
       addToCurrentFrame('height', obj.getHeight());
