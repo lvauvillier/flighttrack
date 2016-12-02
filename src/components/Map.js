@@ -1,12 +1,14 @@
 import React from 'react';
-import { withGoogleMap, GoogleMap, Polyline } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Polyline, Marker } from 'react-google-maps';
 
 const Map = withGoogleMap(({ center, frames, time }) => (
   <GoogleMap
     defaultZoom={18}
     defaultCenter={center}
+    mapTypeId={window.google.maps.MapTypeId.HYBRID}
   >
     <Polyline
+      key={`frames_${frames.length}`}
       path={
         frames.map(frame => ({
           lat: frame.latitude,
@@ -31,6 +33,18 @@ const Map = withGoogleMap(({ center, frames, time }) => (
         strokeWeight: 5,
       }}
     />
+    <Marker
+      position={{ lat: frames[time].latitude, lng: frames[time].longitude }}
+      icon={{
+        path: 'M -10 5 L 0 -0 L 10 5 L 0 -20 z',
+        strokeColor: '#e74c3c ',
+        fillColor: '#e74c3c',
+        fillOpacity: 1,
+        rotation: Math.round(frames[time].yaw / 10),
+      }}
+    />
+
+
   </GoogleMap>
 ));
 
