@@ -1,10 +1,20 @@
 import React, { PropTypes } from 'react';
 import { withGoogleMap, GoogleMap, Polyline, Marker } from 'react-google-maps';
 
+const mapOptions = {
+  rotateControl: false,
+  streetViewControl: false,
+  mapTypeControl: false,
+  mapTypeControlOptions: {
+    position: window.google.maps.ControlPosition.RIGHT_BOTTOM,
+  },
+};
+
 const Map = ({ center, frames, time }) => (
   <GoogleMap
-    defaultZoom={18}
+    defaultZoom={17}
     defaultCenter={center}
+    options={mapOptions}
     mapTypeId={window.google.maps.MapTypeId.HYBRID}
   >
     <Polyline

@@ -13,9 +13,10 @@ export default (flightLog, callback) => {
     let currentFrame;
 
     const newFrame = (flyTime) => {
+      const lastFrame = frames.slice(-1)[0];
+
       // Detect droped frames and fill it with a copy of the last frame
       if (frames.length && flyTime - currentFlyTime > 1) {
-        const lastFrame = frames.slice(-1)[0];
         for (let i = currentFlyTime + 1; i < flyTime; i += 1) {
           frames.push(lastFrame);
         }
@@ -24,7 +25,7 @@ export default (flightLog, callback) => {
       // Add a new frame
       currentFlyTime = flyTime;
       if (currentFrame) {
-        frames.push(currentFrame);
+        frames.push({ ...lastFrame, ...currentFrame });
       }
       currentFrame = {};
     };
@@ -60,8 +61,13 @@ export default (flightLog, callback) => {
       currentFrame.pitch = obj.getPitch();
       currentFrame.roll = obj.getRoll();
       currentFrame.yaw = obj.getYaw();
+      currentFrame.gpsNum = obj.getGpsNum();
+      currentFrame.flycState = obj.getFlycState();
     });
 
+    parser.on('CENTER_BATTERY', (obj) => {
+      currentFrame.relativeCapacity = obj.getRelativeCapacity();
+    });
     parser.parse(reader.result);
 
     callback({
