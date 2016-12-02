@@ -84,14 +84,15 @@ class TimeControl extends Component {
 
   tick() {
     this.setState((prevState) => {
-      if (prevState.time < this.props.endTime) {
-        this.props.onChange(prevState.time + 1);
+      if (prevState.time + prevState.speed <= this.props.endTime) {
+        this.props.onChange(prevState.time + prevState.speed);
         return {
           time: prevState.time + prevState.speed,
         };
       }
       clearInterval(this.timerID);
       return {
+        time: this.props.endTime,
         isPlaying: false,
       };
     });
