@@ -65,12 +65,14 @@ class TimeControl extends Component {
     this.setState({
       time: value,
     });
+    this.props.onChange(value);
   }
 
   tick() {
     this.setState(prevState => ({
       time: prevState.time + 1,
     }));
+    this.props.onChange(this.state.time);
   }
 
   render() {
@@ -109,8 +111,9 @@ class TimeControl extends Component {
 }
 
 TimeControl.propTypes = {
-  startTime: PropTypes.number,
-  endTime: PropTypes.number,
+  startTime: PropTypes.number.isRequired,
+  endTime: PropTypes.number.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default TimeControl;

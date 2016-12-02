@@ -7,26 +7,26 @@ export default (flightLog, callback) => {
     const parser = new DJIParser();
 
     // init frames
-    const frames = {};
     let details;
-    let currentFlyTime = 0;
+    const frames = [];
+    let currentFlyTime;
+    let currentFrame;
 
-    const setCurrentFlyTime = (flyTime) => {
-      frames.start = frames.start ? frames.start : flyTime;
-      frames.end = flyTime;
-      // Detect droped frames and fill it with a copy of the current frame
-      if (currentFlyTime > 0) {
+    const newFrame = (flyTime) => {
+      // Detect droped frames and fill it with a copy of the last frame
+      if (frames.length && flyTime - currentFlyTime > 1) {
+        const lastFrame = frames.slice(-1)[0];
         for (let i = currentFlyTime + 1; i < flyTime; i += 1) {
-          frames[i] = frames[currentFlyTime];
+          frames.push(lastFrame);
         }
       }
-      currentFlyTime = flyTime;
-    };
 
-    // add property
-    const addToCurrentFrame = (key, value) => {
-      frames[currentFlyTime] = frames[currentFlyTime] ? frames[currentFlyTime] : {};
-      frames[currentFlyTime][key] = value;
+      // Add a new frame
+      currentFlyTime = flyTime;
+      if (currentFrame) {
+        frames.push(currentFrame);
+      }
+      currentFrame = {};
     };
 
     parser.on('DETAILS', (obj) => {
@@ -50,16 +50,16 @@ export default (flightLog, callback) => {
     });
 
     parser.on('OSD', (obj) => {
-      setCurrentFlyTime(obj.getFlyTime() * 10);
-      addToCurrentFrame('longitude', obj.getLongitude());
-      addToCurrentFrame('latitude', obj.getLatitude());
-      addToCurrentFrame('height', obj.getHeight());
-      addToCurrentFrame('XspeedX', obj.getXSpeed());
-      addToCurrentFrame('Yspeed', obj.getYSpeed());
-      addToCurrentFrame('Zspeed', obj.getZSpeed());
-      addToCurrentFrame('pitch', obj.getPitch());
-      addToCurrentFrame('roll', obj.getRoll());
-      addToCurrentFrame('yaw', obj.getYaw());
+      newFrame(obj.getFlyTime() * 10);
+      currentFrame.longitude = obj.getLongitude();
+      currentFrame.latitude = obj.getLatitude();
+      currentFrame.height = obj.getHeight();
+      currentFrame.XspeedX = obj.getXSpeed();
+      currentFrame.Yspeed = obj.getYSpeed();
+      currentFrame.Zspeed = obj.getZSpeed();
+      currentFrame.pitch = obj.getPitch();
+      currentFrame.roll = obj.getRoll();
+      currentFrame.yaw = obj.getYaw();
     });
 
     parser.parse(reader.result);
