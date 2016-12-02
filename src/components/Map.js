@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { withGoogleMap, GoogleMap, Polyline, Marker } from 'react-google-maps';
 
-const Map = withGoogleMap(({ center, frames, time }) => (
+const Map = ({ center, frames, time }) => (
   <GoogleMap
     defaultZoom={18}
     defaultCenter={center}
@@ -46,6 +46,12 @@ const Map = withGoogleMap(({ center, frames, time }) => (
 
 
   </GoogleMap>
-));
+);
 
-export default Map;
+Map.propTypes = {
+  center: PropTypes.object.isRequired,
+  frames: PropTypes.array.isRequired,
+  time: PropTypes.number.isRequired,
+};
+
+export default withGoogleMap(Map);
