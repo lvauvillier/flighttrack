@@ -50,7 +50,7 @@ class PositionContainer extends Component {
         <Paper>
           <TimeControl
             startTime={0}
-            endTime={frames.length}
+            endTime={frames.length - 1}
             onChange={this.handleOnChange}
           />
         </Paper>
