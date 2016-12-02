@@ -13,9 +13,15 @@ const styles = StyleSheet.create({
   },
   slider: {
     flex: 1,
+    marginLeft: 12,
+    marginRight: 12,
   },
   time: {
     padding: 12,
+  },
+  speedText: {
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
@@ -24,10 +30,12 @@ class TimeControl extends Component {
     super(props);
     this.state = {
       time: props.startTime,
+      speed: 1,
       isPlaying: false,
     };
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
+    this.handleSpeed = this.handleSpeed.bind(this);
     this.handleOnchange = this.handleOnchange.bind(this);
     this.getTimeStringValue = this.getTimeStringValue.bind(this);
   }
@@ -68,12 +76,18 @@ class TimeControl extends Component {
     this.props.onChange(value);
   }
 
+  handleSpeed() {
+    this.setState(prevState => ({
+      speed: prevState.speed * 2 <= 16 ? prevState.speed * 2 : 1,
+    }));
+  }
+
   tick() {
     this.setState((prevState) => {
       if (prevState.time < this.props.endTime) {
         this.props.onChange(prevState.time + 1);
         return {
-          time: prevState.time + 1,
+          time: prevState.time + prevState.speed,
         };
       }
       clearInterval(this.timerID);
@@ -100,7 +114,11 @@ class TimeControl extends Component {
             </IconButton>
           )
         }
-
+        <IconButton onClick={this.handleSpeed}>
+          <span className={css(styles.speedText)}>
+          x{this.state.speed}
+          </span>
+        </IconButton>
         <Slider
           className={css(styles.slider)}
           min={startTime}
