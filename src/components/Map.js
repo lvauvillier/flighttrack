@@ -15,7 +15,7 @@ const Map = ({ center, frames, time }) => (
     defaultZoom={17}
     defaultCenter={center}
     options={mapOptions}
-    mapTypeId={window.google.maps.MapTypeId.HYBRID}
+    mapTypeId={window.google.maps.MapTypeId.SATELLITE}
   >
     <Polyline
       key={`frames_${frames.length}`}
