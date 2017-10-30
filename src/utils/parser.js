@@ -7,7 +7,7 @@ export default (flightLog, callback) => {
     const parser = new DJIParser();
 
     // init frames
-    let details;
+    const infos = {};
     const frames = [];
     let currentFlyTime;
     let currentFrame;
@@ -31,23 +31,25 @@ export default (flightLog, callback) => {
     };
 
     parser.on('DETAILS', (obj) => {
-      details = {
-        subStreet: obj.getSubStreet(),
-        street: obj.getStreet(),
-        city: obj.getCity(),
-        area: obj.getArea(),
-        longitude: obj.getLongitude(),
-        latitude: obj.getLatitude(),
-        totalDistance: obj.getTotalDistance(),
-        totalTime: obj.getTotalTime(),
-        maxHeight: obj.getMaxHeight(),
-        maxHSpeed: obj.getMaxHSpeed(),
-        maxVSpeed: obj.getMaxVSpeed(),
-        updateTime: obj.getUpdateTime(),
-        aircraftName: obj.getAircraftName(),
-        appType: obj.getAppType(),
-        appVersion: obj.getAppVersion(),
-      };
+      infos.subStreet = ''; // obj.getSubStreet();
+      infos.street = obj.getStreet();
+      infos.city = obj.getCity();
+      infos.area = obj.getArea();
+      infos.longitude = obj.getLongitude();
+      infos.latitude = obj.getLatitude();
+      infos.totalDistance = obj.getTotalDistance();
+      infos.totalTime = obj.getTotalTime();
+      infos.maxHeight = obj.getMaxHeight();
+      infos.maxHSpeed = obj.getMaxHSpeed();
+      infos.maxVSpeed = obj.getMaxVSpeed();
+      infos.updateTime = obj.getUpdateTime();
+      infos.aircraftName = ''; //obj.getAircraftName();
+    });
+
+    parser.on('RECOVER', (obj) => {
+      infos.droneType = obj.getDroneType();
+      infos.appType = obj.getAppType();
+      infos.appVersion = obj.getAppVersion();
     });
 
     parser.on('OSD', (obj) => {
@@ -68,11 +70,27 @@ export default (flightLog, callback) => {
     parser.on('CENTER_BATTERY', (obj) => {
       currentFrame.relativeCapacity = obj.getRelativeCapacity();
     });
+
+    /* parser.on('HOME', () => console.log('HOME'));
+    parser.on('GIMBAL', () => console.log('GIMBAL'));
+    parser.on('RC', () => console.log('RC'));
+    parser.on('CENTER_BATTERY', () => console.log('CENTER_BATTERY'));
+    parser.on('SMART_BATTERY', () => console.log('SMART_BATTERY'));
+    parser.on('RC_GPS', () => console.log('RC_GPS'));
+    parser.on('APP_GPS', () => console.log('APP_GPS'));
+    parser.on('RECOVER', () => console.log('RECOVER'));
+    parser.on('CUSTOM', () => console.log('CUSTOM'));
+    parser.on('DEFORM', () => console.log('DEFORM'));
+    parser.on('APP_TIP', () => console.log('APP_TIP'));
+    parser.on('APP_WARN', () => console.log('APP_WARN'));
+    */
+
+
     parser.parse(reader.result);
 
     callback({
       title: flightLog.name,
-      details,
+      infos,
       frames,
     });
   };

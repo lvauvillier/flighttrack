@@ -51,7 +51,7 @@ class DashboardContainer extends Component {
   }
 
   render() {
-    const { details } = this.props;
+    const { infos } = this.props;
     return (
       <Container>
         <Masonry
@@ -60,26 +60,38 @@ class DashboardContainer extends Component {
           <div className={css(styles.item)}>
             <Paper className={css(styles.paper)}>
               <List>
-                <Subheader>OVERVIEW</Subheader>
+                <Subheader>AIRCRAFT</Subheader>
                 <ListItem
                   disabled
-                  primaryText="Aircraft"
-                  secondaryText={details.aircraftName}
+                  primaryText="Name"
+                  secondaryText={infos.aircraftName}
                 />
                 <ListItem
                   disabled
+                  primaryText="Type"
+                  secondaryText={infos.droneType}
+                />
+              </List>
+            </Paper>
+          </div>
+          <div className={css(styles.item)}>
+            <Paper className={css(styles.paper)}>
+              <List>
+                <Subheader>FLIGHT</Subheader>
+                <ListItem
+                  disabled
                   primaryText="Date"
-                  secondaryText={date(details.updateTime)}
+                  secondaryText={date(infos.updateTime)}
                 />
                 <ListItem
                   disabled
                   primaryText="Distance"
-                  secondaryText={distance(details.totalDistance, false)}
+                  secondaryText={distance(infos.totalDistance, false)}
                 />
                 <ListItem
                   disabled
                   primaryText="Flight Time"
-                  secondaryText={timedelta(details.totalTime)}
+                  secondaryText={timedelta(infos.totalTime)}
                 />
               </List>
             </Paper>
@@ -91,12 +103,12 @@ class DashboardContainer extends Component {
                 <ListItem
                   disabled
                   primaryText="Area"
-                  secondaryText={`${details.city} ${details.area}`}
+                  secondaryText={`${infos.city} ${infos.area}`}
                 />
                 <ListItem
                   disabled
                   primaryText="City"
-                  secondaryText={details.subStreet}
+                  secondaryText={infos.subStreet}
                 />
               </List>
             </Paper>
@@ -108,17 +120,17 @@ class DashboardContainer extends Component {
                 <ListItem
                   disabled
                   primaryText="Max. Height"
-                  secondaryText={distance(details.maxHeight, false)}
+                  secondaryText={distance(infos.maxHeight, false)}
                 />
                 <ListItem
                   disabled
                   primaryText="Max. Horizontal Speed"
-                  secondaryText={speed(details.maxHSpeed, false)}
+                  secondaryText={speed(infos.maxHSpeed, false)}
                 />
                 <ListItem
                   disabled
                   primaryText="Max. Vertical Speed"
-                  secondaryText={speed(details.maxVSpeed, false)}
+                  secondaryText={speed(infos.maxVSpeed, false)}
                 />
               </List>
             </Paper>
@@ -130,12 +142,12 @@ class DashboardContainer extends Component {
                 <ListItem
                   disabled
                   primaryText="Device"
-                  secondaryText={details.appType}
+                  secondaryText={infos.appType}
                 />
                 <ListItem
                   disabled
                   primaryText="Version"
-                  secondaryText={details.appVersion}
+                  secondaryText={infos.appVersion}
                 />
               </List>
             </Paper>
@@ -158,11 +170,11 @@ class DashboardContainer extends Component {
 
 DashboardContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  details: PropTypes.object.isRequired,
+  infos: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  details: state.data.details,
+  infos: state.data.infos,
 });
 
 export default connect(

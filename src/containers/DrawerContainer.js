@@ -8,6 +8,8 @@ import Divider from 'material-ui/Divider';
 import { List } from 'material-ui/List';
 import { spacing, typography } from 'material-ui/styles';
 
+import { withRouter } from 'react-router-dom';
+
 import LinkListItem from '../components/LinkListItem';
 import { toggleDrawer } from '../actions/uiActions';
 import theme from '../theme';
@@ -63,10 +65,6 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
           />
         }
       />
-    </List>
-    <Divider />
-    <List>
-      <Subheader>Details</Subheader>
       <LinkListItem
         to="/position"
         primaryText="Position"
@@ -75,28 +73,6 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
         leftIcon={
           <FontIcon
             className="fa fa-map-marker"
-          />
-        }
-      />
-      <LinkListItem
-        to="/telemetry"
-        primaryText="Telemetry"
-        style={styles.item}
-        activeStyle={styles.activeItem}
-        leftIcon={
-          <FontIcon
-            className="fa fa-tachometer"
-          />
-        }
-      />
-      <LinkListItem
-        to="/battery"
-        primaryText="Battery"
-        style={styles.item}
-        activeStyle={styles.activeItem}
-        leftIcon={
-          <FontIcon
-            className="fa fa-battery-full"
           />
         }
       />
@@ -115,6 +91,6 @@ const mapStateToProps = state => ({
   drawerOpened: state.ui.drawerOpened,
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
-)(DrawerContainer);
+)(DrawerContainer));

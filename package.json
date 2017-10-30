@@ -8,20 +8,21 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.7.1",
-    "react-scripts": "0.7.0"
+    "react-scripts": "^1.0.14"
   },
   "dependencies": {
     "aphrodite": "^1.1.0",
+    "bytebuffer": "^5.0.1",
     "classnames": "^2.2.5",
-    "dji-log-parser": "0.0.4",
-    "material-ui": "^0.16.4",
+    "dji-log-parser": "lvauvillier/dji-log-parser#dev",
+    "material-ui": "^0.19.4",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-dropzone": "^3.7.3",
     "react-google-maps": "^6.0.1",
     "react-masonry-component": "^4.4.0",
-    "react-redux": "^4.4.6",
-    "react-router": "^4.0.0-alpha.5",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-responsive": "^3.2.0"

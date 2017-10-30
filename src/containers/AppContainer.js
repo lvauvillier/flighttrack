@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Match } from 'react-router';
+import { Route, withRouter } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
 
@@ -52,10 +52,10 @@ const AppContainer = ({ logFile, smallScreen, dispatch }) => (
       {
         logFile ? (
           <div style={{ height: '100%' }}>
-            <Match pattern="/" exactly component={DashboardContainer} />
-            <Match pattern="/position" component={PositionContainer} />
-            <Match pattern="/telemetry" component={TelemetryContainer} />
-            <Match pattern="/battery" component={BatteryContainer} />
+            <Route path="/" exact component={DashboardContainer} />
+            <Route path="/position" component={PositionContainer} />
+            <Route path="/telemetry" component={TelemetryContainer} />
+            <Route path="/battery" component={BatteryContainer} />
           </div>
         ) : (
           <DropZoneContainer />
@@ -77,6 +77,6 @@ const mapStateToProps = state => ({
   smallScreen: state.browser.lessThan.medium,
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
-)(AppContainer);
+)(AppContainer));

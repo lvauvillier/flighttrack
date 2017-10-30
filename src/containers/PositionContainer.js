@@ -60,15 +60,15 @@ class PositionContainer extends Component {
   }
 
   render() {
-    const { details, frames } = this.props;
+    const { infos, frames } = this.props;
     return (
       <div className={css(styles.container)}>
         <Map
           containerElement={<div className={css(styles.map)} />}
           mapElement={<div className={css(styles.mapElement)} />}
           center={{
-            lat: details.latitude,
-            lng: details.longitude,
+            lat: infos.latitude,
+            lng: infos.longitude,
           }}
           frames={frames}
           time={this.state.time}
@@ -101,12 +101,12 @@ class PositionContainer extends Component {
 }
 
 PositionContainer.propTypes = {
-  details: PropTypes.object.isRequired,
+  infos: PropTypes.object.isRequired,
   frames: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
-  details: state.data.details,
+  infos: state.data.infos,
   frames: state.data.frames,
 });
 
