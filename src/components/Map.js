@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { withGoogleMap, GoogleMap, Polyline, Marker } from 'react-google-maps';
 
 const mapOptions = {
