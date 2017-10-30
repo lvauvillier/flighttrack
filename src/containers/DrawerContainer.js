@@ -47,10 +47,7 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
     docked={!smallScreen}
   >
     <div style={styles.logo}>
-      <FontIcon
-        className="fa fa-paper-plane-o"
-        style={styles.logoIcon}
-      />
+      <FontIcon className="fa fa-paper-plane-o" style={styles.logoIcon} />
       Flight Track
     </div>
     <List>
@@ -60,22 +57,14 @@ const DrawerContainer = ({ smallScreen, drawerOpened, dispatch }) => (
         primaryText="Dashboard"
         style={styles.item}
         activeStyle={styles.activeItem}
-        leftIcon={
-          <FontIcon
-            className="fa fa-th-large"
-          />
-        }
+        leftIcon={<FontIcon className="fa fa-th-large" />}
       />
       <LinkListItem
         to="/position"
         primaryText="Position"
         style={styles.item}
         activeStyle={styles.activeItem}
-        leftIcon={
-          <FontIcon
-            className="fa fa-map-marker"
-          />
-        }
+        leftIcon={<FontIcon className="fa fa-map-marker" />}
       />
     </List>
   </Drawer>
@@ -92,6 +81,4 @@ const mapStateToProps = state => ({
   drawerOpened: state.ui.drawerOpened,
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-)(DrawerContainer));
+export default withRouter(connect(mapStateToProps)(DrawerContainer));

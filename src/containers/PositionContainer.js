@@ -90,11 +90,7 @@ class PositionContainer extends Component {
           />
         </div>
         <Paper>
-          <TimeControl
-            startTime={0}
-            endTime={frames.length - 1}
-            onChange={this.handleOnChange}
-          />
+          <TimeControl startTime={0} endTime={frames.length - 1} onChange={this.handleOnChange} />
         </Paper>
       </div>
     );
@@ -111,6 +107,4 @@ const mapStateToProps = state => ({
   frames: state.data.frames,
 });
 
-export default connect(
-  mapStateToProps,
-)(PositionContainer);
+export default connect(mapStateToProps)(PositionContainer);

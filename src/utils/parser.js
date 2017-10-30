@@ -43,7 +43,7 @@ export default (flightLog, callback) => {
       infos.maxHSpeed = obj.getMaxHSpeed();
       infos.maxVSpeed = obj.getMaxVSpeed();
       infos.updateTime = obj.getUpdateTime();
-      infos.aircraftName = ''; //obj.getAircraftName();
+      infos.aircraftName = ''; // obj.getAircraftName();
     });
 
     parser.on('RECOVER', (obj) => {
@@ -84,7 +84,6 @@ export default (flightLog, callback) => {
     parser.on('APP_TIP', () => console.log('APP_TIP'));
     parser.on('APP_WARN', () => console.log('APP_WARN'));
     */
-
 
     parser.parse(reader.result);
 

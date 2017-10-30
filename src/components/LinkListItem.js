@@ -3,28 +3,17 @@ import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
 import { ListItem } from 'material-ui/List';
 
-const LinkListItem = ({ to, activeStyle, activeOnlyWhenExact, style, onTouchTap, ...other }) => {
-  return (
-    <Route
-      path={to}
-      exact={activeOnlyWhenExact}
-    >
-      {
-        ({ match }) => (
-          <Link
-            to={to}
-            onClick={onTouchTap}
-          >
-            <ListItem
-              style={match ? { ...activeStyle, ...style } : style}
-              {...other}
-            />
-          </Link>
-        )
-      }
-    </Route>
-  );
-};
+const LinkListItem = ({
+  to, activeStyle, activeOnlyWhenExact, style, onTouchTap, ...other
+}) => (
+  <Route path={to} exact={activeOnlyWhenExact}>
+    {({ match }) => (
+      <Link to={to} onClick={onTouchTap}>
+        <ListItem style={match ? { ...activeStyle, ...style } : style} {...other} />
+      </Link>
+      )}
+  </Route>
+);
 
 LinkListItem.propTypes = {
   to: PropTypes.string.isRequired,

@@ -50,18 +50,16 @@ const AppContainer = ({ logFile, smallScreen, dispatch }) => (
       title={logFile}
     />
     <div className={css(styles.content)}>
-      {
-        logFile ? (
-          <div style={{ height: '100%' }}>
-            <Route path="/" exact component={DashboardContainer} />
-            <Route path="/position" component={PositionContainer} />
-            <Route path="/telemetry" component={TelemetryContainer} />
-            <Route path="/battery" component={BatteryContainer} />
-          </div>
-        ) : (
-          <DropZoneContainer />
-        )
-      }
+      {logFile ? (
+        <div style={{ height: '100%' }}>
+          <Route path="/" exact component={DashboardContainer} />
+          <Route path="/position" component={PositionContainer} />
+          <Route path="/telemetry" component={TelemetryContainer} />
+          <Route path="/battery" component={BatteryContainer} />
+        </div>
+      ) : (
+        <DropZoneContainer />
+      )}
     </div>
     <DrawerContainer />
   </div>
@@ -78,6 +76,4 @@ const mapStateToProps = state => ({
   smallScreen: state.browser.lessThan.medium,
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-)(AppContainer));
+export default withRouter(connect(mapStateToProps)(AppContainer));

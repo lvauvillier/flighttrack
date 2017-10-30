@@ -55,23 +55,13 @@ class DashboardContainer extends Component {
     const { infos } = this.props;
     return (
       <Container>
-        <Masonry
-          options={{ transitionDuration: 0 }}
-        >
+        <Masonry options={{ transitionDuration: 0 }}>
           <div className={css(styles.item)}>
             <Paper className={css(styles.paper)}>
               <List>
                 <Subheader>AIRCRAFT</Subheader>
-                <ListItem
-                  disabled
-                  primaryText="Name"
-                  secondaryText={infos.aircraftName}
-                />
-                <ListItem
-                  disabled
-                  primaryText="Type"
-                  secondaryText={infos.droneType}
-                />
+                <ListItem disabled primaryText="Name" secondaryText={infos.aircraftName} />
+                <ListItem disabled primaryText="Type" secondaryText={infos.droneType} />
               </List>
             </Paper>
           </div>
@@ -79,11 +69,7 @@ class DashboardContainer extends Component {
             <Paper className={css(styles.paper)}>
               <List>
                 <Subheader>FLIGHT</Subheader>
-                <ListItem
-                  disabled
-                  primaryText="Date"
-                  secondaryText={date(infos.updateTime)}
-                />
+                <ListItem disabled primaryText="Date" secondaryText={date(infos.updateTime)} />
                 <ListItem
                   disabled
                   primaryText="Distance"
@@ -106,11 +92,7 @@ class DashboardContainer extends Component {
                   primaryText="Area"
                   secondaryText={`${infos.city} ${infos.area}`}
                 />
-                <ListItem
-                  disabled
-                  primaryText="City"
-                  secondaryText={infos.subStreet}
-                />
+                <ListItem disabled primaryText="City" secondaryText={infos.subStreet} />
               </List>
             </Paper>
           </div>
@@ -140,16 +122,8 @@ class DashboardContainer extends Component {
             <Paper className={css(styles.paper)}>
               <List>
                 <Subheader>APP</Subheader>
-                <ListItem
-                  disabled
-                  primaryText="Device"
-                  secondaryText={infos.appType}
-                />
-                <ListItem
-                  disabled
-                  primaryText="Version"
-                  secondaryText={infos.appVersion}
-                />
+                <ListItem disabled primaryText="Device" secondaryText={infos.appType} />
+                <ListItem disabled primaryText="Version" secondaryText={infos.appVersion} />
               </List>
             </Paper>
           </div>
@@ -178,6 +152,4 @@ const mapStateToProps = state => ({
   infos: state.data.infos,
 });
 
-export default connect(
-  mapStateToProps,
-)(DashboardContainer);
+export default connect(mapStateToProps)(DashboardContainer);
