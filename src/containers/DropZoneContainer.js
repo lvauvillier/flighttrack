@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StyleSheet, css } from 'aphrodite';
+
 import Dropzone from 'react-dropzone';
-import RaisedButton from 'material-ui/RaisedButton';
-import UploadIcon from 'material-ui/svg-icons/file/file-upload';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
+import UploadIcon from 'material-ui-icons/FileUpload';
+
+import { withStyles } from 'material-ui/styles';
 
 import { addFlightLogData } from '../actions/dataActions';
 import parser from '../utils/parser';
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
-    margin: 20,
+    margin: 24,
     border: '5px dashed #dddddd',
     borderRadius: 10,
-    height: 'calc(100% - 40px)',
+    height: 'calc(100% - 58px)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -23,18 +26,12 @@ const styles = StyleSheet.create({
   content: {
     textAlign: 'center',
   },
-  text: {
-    display: 'block',
-    fontSize: '1.5em',
-    fontWeight: 'bold',
-    marginBottom: 15,
-  },
   icon: {
     width: 100,
     height: 100,
     display: 'block',
   },
-});
+};
 
 class DropZoneContainer extends Component {
   constructor(props) {
@@ -50,21 +47,23 @@ class DropZoneContainer extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <Dropzone
-        className={css(styles.container)}
+        className={classes.container}
         onDrop={this.handleOnDrop}
         multiple={false}
         accept=".txt"
         activeStyle={{ backgroundColor: '#fafafa' }}
       >
-        <div className={css(styles.content)}>
-          <UploadIcon
-            color="#cccccc"
-            style={{ width: 100, height: 100 }}
-          />
-          <span className={css(styles.text)}>Drag & Drop a flight log</span>
-          <RaisedButton primary label="or select a file" />
+        <div className={classes.content}>
+          <UploadIcon color="#cccccc" style={{ width: 100, height: 100 }} />
+          <Typography type="headline" color="inherit" gutterBottom>
+            Drag & Drop a flight log
+          </Typography>
+          <Button raised color="primary">
+            or select a file
+          </Button>
         </div>
       </Dropzone>
     );
@@ -72,7 +71,8 @@ class DropZoneContainer extends Component {
 }
 
 DropZoneContainer.propTypes = {
+  classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect()(DropZoneContainer);
+export default withStyles(styles)(connect()(DropZoneContainer));

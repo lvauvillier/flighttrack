@@ -1,15 +1,13 @@
+import { deepOrange } from 'material-ui/colors';
+
 export default {
-  fontFamily: 'Open Sans',
-  palette: {
-    primary1Color: '#e74c3c',
+  typography: {
+    fontFamily: '"Open Sans", "Helvetica", "Arial", sans-serif',
   },
-  paper: {
-    zDepthShadows: [
-      '0 1px 4px rgba(0,0,0,.1)',
-      '0 1px 4px rgba(0,0,0,.1)', // @todo
-      '0 1px 4px rgba(0,0,0,.1)', // @todo
-      '0 1px 4px rgba(0,0,0,.1)', // @todo
-      '0 1px 4px rgba(0,0,0,.1)', // @todo
-    ],
+  palette: {
+    primary: {
+      ...deepOrange,
+      500: '#e74c3c',
+    },
   },
 };

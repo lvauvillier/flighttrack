@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { getMuiTheme, MuiThemeProvider } from 'material-ui/styles';
+import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
+import 'rc-slider/assets/index.css';
 
 import configureStore from './store';
 import AppContainer from './containers/AppContainer';
@@ -18,7 +20,7 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
+    <MuiThemeProvider theme={createMuiTheme(theme)}>
       <Router>
         <AppContainer />
       </Router>

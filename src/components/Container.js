@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const style = {
-  margin: 20,
+import { withStyles } from 'material-ui/styles';
+
+const styles = {
+  container: {
+    height: 'calc(100% - 40px)',
+    overflowY: 'scroll',
+    padding: 20,
+  },
 };
 
-const Container = ({ children }) => (
-  <div style={style}>
-    { children }
-  </div>
-);
+const Container = ({ children, classes }) => <div className={classes.container}>{children}</div>;
 
 Container.propTypes = {
-  children: PropTypes.node,
+  classes: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-export default Container;
+export default withStyles(styles)(Container);

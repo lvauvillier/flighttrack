@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StyleSheet, css } from 'aphrodite';
+import compose from 'recompose/compose';
 
 import Paper from 'material-ui/Paper';
-import FontIcon from 'material-ui/FontIcon';
+import Icon from 'material-ui/Icon';
+import Typography from 'material-ui/Typography';
 
-import BatteryIndicator from '../components/BatteryIndicator';
+import { withStyles } from 'material-ui/styles';
+
+import BatteryIcon from '../components/BatteryIcon';
 import Map from '../components/Map';
 import TimeControl from '../components/TimeControl';
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     height: '100%',
     position: 'relative',
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
   mapElement: {
     height: '100%',
   },
-});
+};
 
 class PositionContainer extends Component {
   constructor(props) {
@@ -61,12 +64,13 @@ class PositionContainer extends Component {
   }
 
   render() {
-    const { infos, frames } = this.props;
+    const { infos, frames, classes } = this.props;
+    const percentage = frames[this.state.time].relativeCapacity;
     return (
-      <div className={css(styles.container)}>
+      <div className={classes.container}>
         <Map
-          containerElement={<div className={css(styles.map)} />}
-          mapElement={<div className={css(styles.mapElement)} />}
+          containerElement={<div className={classes.map} />}
+          mapElement={<div className={classes.mapElement} />}
           center={{
             lat: infos.latitude,
             lng: infos.longitude,
@@ -74,21 +78,20 @@ class PositionContainer extends Component {
           frames={frames}
           time={this.state.time}
         />
-        <div className={css(styles.overlay)}>
-          <div className={css(styles.overlayItem)}>
-            <FontIcon className="fa fa-plane" color="white" />
+        <Typography className={classes.overlay} type="subheading">
+          <div className={classes.overlayItem}>
+            <Icon color="contrast" className="fa fa-plane" />
             {` ${frames[this.state.time].flycState || '-'}`}
           </div>
-          <div className={css(styles.overlayItem)}>
-            <FontIcon className="fa fa-signal" color="white" />
+          <div className={classes.overlayItem}>
+            <Icon color="contrast" className="fa fa-signal" />
             {` ${frames[this.state.time].gpsNum || '-'}`}
           </div>
-          <BatteryIndicator
-            className={css(styles.overlayItem)}
-            percentage={frames[this.state.time].relativeCapacity}
-            color="white"
-          />
-        </div>
+          <div className={classes.overlayItem}>
+            <BatteryIcon percentage={percentage} color="contrast" />
+            {percentage ? ` ${percentage}%` : ' N/A'}
+          </div>
+        </Typography>
         <Paper>
           <TimeControl startTime={0} endTime={frames.length - 1} onChange={this.handleOnChange} />
         </Paper>
@@ -100,6 +103,7 @@ class PositionContainer extends Component {
 PositionContainer.propTypes = {
   infos: PropTypes.object.isRequired,
   frames: PropTypes.array.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -107,4 +111,4 @@ const mapStateToProps = state => ({
   frames: state.data.frames,
 });
 
-export default connect(mapStateToProps)(PositionContainer);
+export default compose(withStyles(styles), connect(mapStateToProps))(PositionContainer);

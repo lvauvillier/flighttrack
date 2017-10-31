@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, css } from 'aphrodite';
 
-import Slider from 'material-ui/Slider';
+import Slider from 'rc-slider';
+import Typography from 'material-ui/Typography';
+
 import IconButton from 'material-ui/IconButton';
-import Play from 'material-ui/svg-icons/av/play-arrow';
-import Pause from 'material-ui/svg-icons/av/pause';
+import PlayArrow from 'material-ui-icons/PlayArrow';
+import Pause from 'material-ui-icons/Pause';
 
-const styles = StyleSheet.create({
+import { withStyles, withTheme } from 'material-ui/styles';
+
+const styles = {
   container: {
     height: 48,
     display: 'flex',
@@ -16,15 +19,16 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
     marginRight: 12,
+    marginTop: 18,
   },
   time: {
-    padding: 12,
+    padding: 14,
   },
   speedText: {
     fontWeight: 'bold',
     fontSize: 16,
   },
-});
+};
 
 class TimeControl extends Component {
   constructor(props) {
@@ -48,8 +52,8 @@ class TimeControl extends Component {
   getTimeStringValue() {
     const totalSeconds = this.state.time / 10;
     const minutes = Math.floor(totalSeconds / 60);
-    const seconds = Math.round(totalSeconds - (minutes * 60));
-    const pad = str => (`00${str}`).slice(-2);
+    const seconds = Math.round(totalSeconds - minutes * 60);
+    const pad = str => `00${str}`.slice(-2);
     return `${pad(minutes)}:${pad(seconds)}`;
   }
 
@@ -57,10 +61,7 @@ class TimeControl extends Component {
     this.setState({
       isPlaying: true,
     });
-    this.timerID = setInterval(
-      () => this.tick(),
-      100,
-    );
+    this.timerID = setInterval(() => this.tick(), 100);
   }
 
   handlePause() {
@@ -70,7 +71,7 @@ class TimeControl extends Component {
     clearInterval(this.timerID);
   }
 
-  handleOnchange(event, value) {
+  handleOnchange(value) {
     this.setState({
       time: value,
     });
@@ -100,48 +101,45 @@ class TimeControl extends Component {
   }
 
   render() {
-    const { startTime, endTime } = this.props;
+    const { classes, theme, startTime, endTime } = this.props;
     return (
-      <div className={css(styles.container)}>
-
-        {
-          this.state.isPlaying
-          ? (
-            <IconButton onClick={this.handlePause}>
-              <Pause />
-            </IconButton>
-          ) : (
-            <IconButton onClick={this.handlePlay}>
-              <Play />
-            </IconButton>
-          )
-        }
+      <div className={classes.container}>
+        {this.state.isPlaying ? (
+          <IconButton onClick={this.handlePause}>
+            <Pause />
+          </IconButton>
+        ) : (
+          <IconButton onClick={this.handlePlay}>
+            <PlayArrow />
+          </IconButton>
+        )}
         <IconButton onClick={this.handleSpeed}>
-          <span className={css(styles.speedText)}>
-          x{this.state.speed}
-          </span>
+          <span className={classes.speedText}>x{this.state.speed}</span>
         </IconButton>
         <Slider
-          className={css(styles.slider)}
+          className={classes.slider}
           min={startTime}
           max={endTime}
           value={this.state.time}
+          trackStyle={{ backgroundColor: theme.palette.primary[500] }}
+          handleStyle={{
+            borderColor: theme.palette.primary[500],
+          }}
           step={1}
           onChange={this.handleOnchange}
-          sliderStyle={{ marginTop: 15 }}
         />
-        <div className={css(styles.time)}>
-          {this.getTimeStringValue()}
-        </div>
+        <Typography className={classes.time}>{this.getTimeStringValue()}</Typography>
       </div>
     );
   }
 }
 
 TimeControl.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
   startTime: PropTypes.number.isRequired,
   endTime: PropTypes.number.isRequired,
   onChange: PropTypes.func,
 };
 
-export default TimeControl;
+export default withTheme()(withStyles(styles)(TimeControl));
