@@ -60,7 +60,7 @@ const styles = theme => ({
   content: {
     width: '100%',
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: '#fafafa',
     height: 'calc(100% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {

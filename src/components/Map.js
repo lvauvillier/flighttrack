@@ -10,6 +10,7 @@ const mapOptions = {
   mapTypeControlOptions: {
     position: window.google.maps.ControlPosition.RIGHT_BOTTOM,
   },
+  fullscreenControl: false,
 };
 
 const Map = ({ center, frames, time }) => (
@@ -21,12 +22,10 @@ const Map = ({ center, frames, time }) => (
   >
     <Polyline
       key={`frames_${frames.length}`}
-      path={
-        frames.map(frame => ({
-          lat: frame.latitude,
-          lng: frame.longitude,
-        }))
-      }
+      path={frames.map(frame => ({
+        lat: frame.latitude,
+        lng: frame.longitude,
+      }))}
       options={{
         strokeColor: '#ffffff',
         strokeWeight: 5,
@@ -34,12 +33,10 @@ const Map = ({ center, frames, time }) => (
       }}
     />
     <Polyline
-      path={
-        frames.slice(0, time).map(frame => ({
-          lat: frame.latitude,
-          lng: frame.longitude,
-        }))
-      }
+      path={frames.slice(0, time).map(frame => ({
+        lat: frame.latitude,
+        lng: frame.longitude,
+      }))}
       options={{
         strokeColor: '#ffff00',
         strokeWeight: 5,
@@ -55,8 +52,6 @@ const Map = ({ center, frames, time }) => (
         rotation: Math.round(frames[time].yaw / 10),
       }}
     />
-
-
   </GoogleMap>
 );
 

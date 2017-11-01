@@ -12,9 +12,7 @@ const styles = theme => ({
   },
 });
 
-const LinkListItem = ({
-  to, activeOnlyWhenExact, classes, ...other
-}) => (
+const LinkListItem = ({ to, activeOnlyWhenExact, classes, ...other }) => (
   <Route path={to} exact={activeOnlyWhenExact}>
     {({ match }) => (
       <Link to={to}>
@@ -25,6 +23,7 @@ const LinkListItem = ({
 );
 
 LinkListItem.propTypes = {
+  classes: PropTypes.object.isRequired,
   to: PropTypes.string.isRequired,
   activeOnlyWhenExact: PropTypes.bool,
 };

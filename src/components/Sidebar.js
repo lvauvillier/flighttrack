@@ -16,6 +16,8 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   drawerPaper: {
+    backgroundColor: '#f5f5f5 ',
+    border: 'none',
     position: 'relative',
     height: '100%',
     width: drawerWidth,
@@ -25,7 +27,7 @@ const styles = theme => ({
     }),
   },
   drawerPaperClose: {
-    width: 60,
+    width: 52,
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,

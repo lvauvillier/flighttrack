@@ -5,7 +5,8 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = {
   container: {
-    height: 'calc(100% - 40px)',
+    boxSizing: 'border-box',
+    height: '100%',
     overflowY: 'scroll',
     padding: 20,
   },
